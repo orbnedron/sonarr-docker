@@ -1,0 +1,11 @@
+---
+sonarr:
+    build: .
+    container_name: 'sonarr'
+    volumes:
+        - './data/downloads:/media/downloads'
+        - './data/series:/media/series'
+        - './data/config:/config'
+    ports:
+        - 8989:8989
+    restart: 'always'
