@@ -2,13 +2,13 @@ FROM orbnedron/mono-alpine
 MAINTAINER orbnedron
 
 # Define version of Sonarr
-ARG VERSION=2.0.0.5252
+ARG VERSION=2.0.0.5301
 
 RUN apk add --no-cache  --virtual=.package-dependencies curl tar gzip && \
     apk add --no-cache mediainfo --repository http://dl-cdn.alpinelinux.org/alpine/edge/community && \
     curl -L -o /tmp/sonarr.tar.gz http://download.sonarr.tv/v2/master/mono/NzbDrone.master.${VERSION}.mono.tar.gz && \
     tar xzf /tmp/sonarr.tar.gz -C /tmp/ && \
-    mkdir /opt && \
+    mkdir -p /opt && \
     mv /tmp/NzbDrone /opt/NzbDrone && \
     rm -rf /var/tmp/* && \
     rm -rf /var/cache/apk/* && \
