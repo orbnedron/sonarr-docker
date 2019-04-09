@@ -2,7 +2,7 @@ FROM orbnedron/mono-alpine
 MAINTAINER orbnedron
 
 # Define version of Sonarr
-ARG VERSION=2.0.0.5301
+ARG VERSION=2.0.0.5322
 
 RUN apk add --no-cache  --virtual=.package-dependencies curl tar gzip && \
     apk add --no-cache mediainfo --repository http://dl-cdn.alpinelinux.org/alpine/edge/community && \
