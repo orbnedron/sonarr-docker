@@ -1,8 +1,8 @@
-FROM orbnedron/mono-alpine
+FROM orbnedron/mono-alpine:v5.20.1.19
 MAINTAINER orbnedron
 
 # Define version of Sonarr
-ARG VERSION=2.0.0.5322
+ARG VERSION=2.0.0.5338
 
 RUN apk add --no-cache  --virtual=.package-dependencies curl tar gzip && \
     apk add --no-cache mediainfo --repository http://dl-cdn.alpinelinux.org/alpine/edge/community && \
@@ -10,6 +10,7 @@ RUN apk add --no-cache  --virtual=.package-dependencies curl tar gzip && \
     tar xzf /tmp/sonarr.tar.gz -C /tmp/ && \
     mkdir -p /opt && \
     mv /tmp/NzbDrone /opt/NzbDrone && \
+    ln -s /usr/lib/libmono-native.so.0 /usr/lib/libmono-native.so && \
     rm -rf /var/tmp/* && \
     rm -rf /var/cache/apk/* && \
     rm -rf /tmp/* && \
