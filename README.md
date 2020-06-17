@@ -33,7 +33,6 @@ To run it (with image on docker hub) :
     --restart unless-stopped \
     --name sonarr \
     orbnedron/sonarr
-
 ```
 
 Open a browser and point it to [http://my-docker-host:8989](http://my-docker-host:8989)
