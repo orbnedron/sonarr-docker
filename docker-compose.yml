@@ -1,11 +1,20 @@
 ---
-sonarr:
-    build: .
-    container_name: 'sonarr'
+version: "3.8"
+services:
+  sonarr:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - SONARR_VERSION=2.0.0.5344
+    container_name: "sonarr"
     volumes:
-        - './data/downloads:/media/downloads'
-        - './data/series:/media/series'
-        - './data/config:/config'
+      - './data/downloads:/media/downloads'
+      - './data/series:/media/series'
+      - './data/config:/config'
     ports:
-        - 8989:8989
-    restart: 'always'
+      - 8989:8989
+    restart: 'unless-stopped'
+#    environment:
+#      - SONARR_USER_ID=1000
+#      - SONARR_GROUP_ID=1000
