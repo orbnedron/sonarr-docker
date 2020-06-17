@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "Starting deployment to docker hub"
-echo "$REGISTRY_PASS" | docker login docker.io -u "$REGISTRY_USER" --password-stdin
+echo "$REGISTRY_PASS" | docker -u "$REGISTRY_USER" --password-stdin
 if [ $? -ne 0 ]; then
   echo "Login failed"
   exit 1

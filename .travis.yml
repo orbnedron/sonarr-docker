@@ -14,8 +14,6 @@ services:
 before_script:
 # Find a better solution to get latest version
   - export SONARR_VERSION="$(curl -s https://github.com/Sonarr/Sonarr/releases | grep "/Sonarr/Sonarr/releases/tag/" | head -n1 | sed -e 's/<a href="\/Sonarr\/Sonarr\/releases\/tag\/v//g' | sed -e 's/">//g' | tr -d '[:space:]')"
-  - echo "$REGISTRY_PASS" | docker login docker.io -u "$REGISTRY_USER" --password-stdin
-  - docker pull $IMAGE_NAME || true
 script:
   - docker build --build-arg SONARR_VERSION=${SONARR_VERSION} --pull --cache-from $IMAGE_NAME --tag $IMAGE_NAME .
   - docker run --name sonarr -d -p 8989:8989 ${IMAGE_NAME}
