@@ -28,16 +28,8 @@ script:
 after_script:
   - docker images
 
-before_deploy:
-  - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin >/dev/null 2>&1
 deploy:
-  - provider: script
-    skip_cleanup: true
-    script: docker push $IMAGE_NAME >/dev/null 2>&1
-    on:
-      branch: master
-  - provider: script
-    skip_cleanup: true
-    script: docker push $IMAGE_NAME:v$SONARR_VERSION >/dev/null 2>&1
-    on:
-      branch: master
+  provider: script
+  script: bash docker_push
+  on:
+    branch: master

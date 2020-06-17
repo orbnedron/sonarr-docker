@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin >/dev/null 2>&1
+docker push $IMAGE_NAME >/dev/null 2>&1
+docker push $IMAGE_NAME:v$SONARR_VERSION >/dev/null 2>&1
