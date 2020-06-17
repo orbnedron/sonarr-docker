@@ -23,19 +23,21 @@ script:
   - curl --retry 20 --retry-connrefused --retry-delay 3 -s http://localhost:8989 >/dev/null 2>&1
   - docker stop sonarr
   - docker rm -f sonarr
-  - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$SONARR_VERSION
+  - docker tag $IMAGE_NAME:latest $IMAGE_NAME:v$SONARR_VERSION
 
 after_script:
   - docker images
 
 before_deploy:
-  - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
+  - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin >/dev/null 2>&1
 deploy:
   - provider: script
+    skip_cleanup: true
     script: docker push $IMAGE_NAME >/dev/null 2>&1
     on:
       branch: master
   - provider: script
-    script: docker push $IMAGE_NAME:$SONARR_VERSION >/dev/null 2>&1
+    skip_cleanup: true
+    script: docker push $IMAGE_NAME:v$SONARR_VERSION >/dev/null 2>&1
     on:
       branch: master
