@@ -22,6 +22,7 @@ adduser --shell /bin/sh --uid $USER_ID --disabled-password --ingroup sonarr sona
 
 if [ "$(id -u)" = "0" ]; then
   chown -R sonarr:sonarr /config
+  chown -R sonarr /opt/NzbDrone
   set -- gosu sonarr:sonarr "$@"
 fi
 
