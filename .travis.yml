@@ -1,6 +1,6 @@
 dist: bionic
-sudo: required
-language: bash
+os: linux
+language: shell
 
 env:
   global:
