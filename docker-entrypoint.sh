@@ -28,7 +28,8 @@ fi
 
 if [ 1 -gt $(cat /etc/passwd | awk -F ":" '{ print $3 }' | grep -w $USER_ID | wc -l) ]; then
   echo "Creating user sonarr"
-  adduser --shell /bin/sh --uid $USER_ID --disabled-password -G $GROUP_ID sonarr
+  GROUP_NAME=$(cat /etc/group | awk -F ":" '{ print $1,$3 }' | grep -w $GROUP_ID | awk '{ print $1 }')
+  adduser --shell /bin/sh --uid $USER_ID --disabled-password --no-create-home -G $GROUP_NAME sonarr
 else
   echo "User id $USER_ID already exist, using that"
 fi
@@ -38,7 +39,7 @@ XDG_CONFIG_HOME="/config"
 
 if [ "$(id -u)" = "0" ]; then
   chown -R $USER_ID:$GROUP_ID /config
-  chown -R $USER_ID:$GROUP_ID /opt/sonarr
+  chown -R $USER_ID:$GROUP_ID /opt/NzbDrone
   set -- gosu $USER_ID:$GROUP_ID "$@"
 fi
 
