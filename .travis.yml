@@ -13,7 +13,7 @@ git:
 services:
   - docker
 before_install:
-  - sudo apt-get -y jq
+  - sudo apt-get install -y jq
 before_script:
   - docker pull $IMAGE_NAME
   # Find a better solution to get latest version
