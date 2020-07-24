@@ -11,6 +11,12 @@ git:
   depth: false
 services:
   - docker
+notifications:
+  email:
+    recipients:
+      - orbnrdron@nordenbro.com
+    on_success: change
+    on_failure: always
 
 before_install:
   - sudo apt-get install -y jq
