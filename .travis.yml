@@ -9,21 +9,23 @@ env:
     - IMAGE_NAME="orbnedron/sonarr"
 git:
   depth: false
-
 services:
   - docker
+
 before_install:
   - sudo apt-get install -y jq
+
 before_script:
   - docker pull $IMAGE_NAME
   # Find a better solution to get latest version
   - export SONARR_VERSION="$(curl -s https://github.com/Sonarr/Sonarr/releases | grep "/Sonarr/Sonarr/releases/tag/" | head -n1 | sed -e 's/<a href="\/Sonarr\/Sonarr\/releases\/tag\/v//g' | sed -e 's/">//g' | tr -d '[:space:]')"
+
 script:
   - docker build --build-arg SONARR_VERSION=${SONARR_VERSION} --pull --cache-from $IMAGE_NAME --tag $IMAGE_NAME .
   - docker run --name sonarr -d -p 8989:8989 ${IMAGE_NAME}
   - sleep 20
   - docker logs sonarr
-  - curl --retry 20 --retry-connrefused --retry-delay 3 -s http://localhost:8989 >/dev/null 2>&1  || docker rmi -f ${IMAGE_NAME}:latest && exit 1
+  - curl --retry 20 --retry-connrefused --retry-delay 3 -s http://localhost:8989 >/dev/null 2>&1
   - docker stop sonarr
   - docker rm -f sonarr
   - docker tag $IMAGE_NAME:latest ${IMAGE_NAME}:v${SONARR_VERSION}
