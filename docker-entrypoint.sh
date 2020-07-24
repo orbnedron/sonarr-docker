@@ -15,6 +15,7 @@ set -e
 
 USER_ID=${SONARR_USER_ID:-1000}
 GROUP_ID=${SONARR_GROUP_ID:-1000}
+XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-/tmp/xdg}
 
 echo "Starting with UID : $USER_ID, GID: $GROUP_ID"
 
@@ -26,6 +27,10 @@ else
   echo "Group id $GROUP_ID already exist, using that"
 fi
 
+if [ ! -d "${XDG_CONFIG_HOME}" ]; then
+  mkdir -p "${XDG_CONFIG_HOME}"
+fi
+
 if [ 1 -gt $(cat /etc/passwd | awk -F ":" '{ print $3 }' | grep -w $USER_ID | wc -l) ]; then
   echo "Creating user sonarr"
   GROUP_NAME=$(cat /etc/group | awk -F ":" '{ print $1,$3 }' | grep -w $GROUP_ID | awk '{ print $1 }')
@@ -34,11 +39,9 @@ else
   echo "User id $USER_ID already exist, using that"
 fi
 
-
-XDG_CONFIG_HOME="/config"
-
 if [ "$(id -u)" = "0" ]; then
   chown -R $USER_ID:$GROUP_ID /config
+  chown -R $USER_ID:$GROUP_ID "${XDG_CONFIG_HOME}"
   chown -R $USER_ID:$GROUP_ID /opt/NzbDrone
   set -- gosu $USER_ID:$GROUP_ID "$@"
 fi
