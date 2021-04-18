@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - SONARR_VERSION=2.0.0.5344
+        - SONARR_VERSION=3.0.6.1196
     container_name: "sonarr"
     volumes:
       - './data/downloads:/media/downloads'

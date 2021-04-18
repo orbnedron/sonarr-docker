@@ -12,12 +12,10 @@ RUN apk add --no-cache mono gosu curl --repository http://dl-cdn.alpinelinux.org
     cert-sync /etc/ssl/certs/ca-certificates.crt && \
     # Download and install sonarr
     apk add --no-cache --virtual=.package-dependencies tar gzip && \
-    curl -L -o /tmp/sonarr.tar.gz http://download.sonarr.tv/v2/master/mono/NzbDrone.master.${SONARR_VERSION}.mono.tar.gz && \
+    curl -L -o /tmp/sonarr.tar.gz "https://services.sonarr.tv/v1/download/main/latest?version=3&os=linux" && \
     tar xzf /tmp/sonarr.tar.gz -C /tmp/ && \
     mkdir -p /opt && \
-    mv /tmp/NzbDrone /opt/NzbDrone && \
-    # Fix dependency
-    ln -s /usr/lib/libmono-native.so.0 /usr/lib/libmono-native.so && \
+    mv /tmp/Sonarr /opt/Sonarr && \
     # Cleanup
     rm -rf /var/tmp/* && \
     rm -rf /var/cache/apk/* && \
@@ -35,5 +33,5 @@ EXPOSE 8989
 WORKDIR /config
 
 # Define default start command
-CMD ["mono", "--debug", "/opt/NzbDrone/NzbDrone.exe", "-nobrowser", "-data=/config"]
+CMD ["mono", "--debug", "/opt/Sonarr/Sonarr.exe", "-nobrowser", "-data=/config"]
 

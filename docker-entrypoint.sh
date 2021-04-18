@@ -45,7 +45,7 @@ export XDG_CONFIG_DIR="${XDG_CONFIG_HOME}"
 if [ "$(id -u)" = "0" ]; then
   chown -R $USER_ID:$GROUP_ID /config
   chown -R $USER_ID:$GROUP_ID "${XDG_CONFIG_HOME}"
-  chown -R $USER_ID:$GROUP_ID /opt/NzbDrone
+  chown -R $USER_ID:$GROUP_ID /opt/Sonarr
   set -- gosu $USER_ID:$GROUP_ID "$@"
 fi
 
