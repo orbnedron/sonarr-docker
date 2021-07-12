@@ -4,7 +4,7 @@
 
 # Important notice
 
-Versions of this docker image published after 2020-06-15 does not run Sonarr as root anymore, this might cause permission errors.
+Versions of this docker image published after 2020-06-15 does not run Sonarr as root anymore, this might cause permission errors. 
 
 # About
 
